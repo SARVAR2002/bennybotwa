@@ -18,6 +18,7 @@ const _biodata = JSON.parse(fs.readFileSync('./ingfo/biodata.json'))
 const _registered = JSON.parse(fs.readFileSync('./ingfo/registered.json'))
 const _premium = JSON.parse(fs.readFileSync('./lib/premium.json'))
 const ban = JSON.parse(fs.readFileSync('./lib/banned.json'))
+const rugapoi = require('./lib/nekopoi')
 
 moment.tz.setDefault('Asia/Jakarta').locale('id')
 
@@ -110,18 +111,36 @@ module.exports = msgHandler = async (benny, message) => {
 		if (!isPremium) return benny.sendText(from, `Nomor kamu belum terdaftar sebagai user premium. Hubungi owner untuk mendaftar!`)
 		if (!isRegistered) return benny.sendText(from, `Nomor kamu belum terdafar! \n\nSilahkan register dengan format:\n*#daftar* <nama | daerah>\n\nTanpa tanda <>`)
             if (isMedia) {
-                if (mimetype === 'video/mp4' && message.duration < 20 || mimetype === 'image/gif' && message.duration < 20) {
+                if (mimetype === 'video/mp4' && message.duration < 10 || mimetype === 'image/gif' && message.duration < 10) {
                     const mediaData = await decryptMedia(message, uaOverride)
                     benny.reply(from, '[WAIT] Sedang di proses⏳ silahkan tunggu ± 1 min!', id)
                     const filename = `./media/aswu.${mimetype.split('/')[1]}`
                     await fs.writeFileSync(filename, mediaData)
-                    await exec(`gify ${filename} ./media/output.gif --fps=60 --scale=240:240`, async function (error, stdout, stderr) {
+                    await exec(`gify ${filename} ./media/output.gif --fps=30 --scale=240:240`, async function (error, stdout, stderr) {
                         const gif = await fs.readFileSync('./media/output.gif', { encoding: "base64" })
                         await benny.sendImageAsSticker(from, `data:image/gif;base64,${gif.toString('base64')}`)
                     })
                 } else (
                     benny.reply(from, '[❗] Kirim video dengan caption *#stickerGif* max 10 sec!', id)
                 )
+            }
+            break
+			 case '#stickernobg':
+        case '#stikernobg':
+		case '#sticknobg':
+	    if (isMedia) {
+                try {
+                    var mediaData = await decryptMedia(message, uaOverride)
+                    var imageBase64 = `data:${mimetype};base64,${mediaData.toString('base64')}`
+                    var base64img = imageBase64
+                    var outFile = './media/img/noBg.png'
+                    // untuk api key kalian bisa dapatkan pada website remove.bg
+                    var result = await removeBackgroundFromImageBase64({ base64img, apiKey: 'rab1WSoWXxf4hjpcjEcJHrUm', size: 'auto', type: 'auto', outFile })
+                    await fs.writeFile(outFile, result.base64img)
+                    await benny.sendImageAsSticker(from, `data:${mimetype};base64,${result.base64img}`)
+                } catch(err) {
+                    console.log(err)
+                }
             }
             break
         case '#donasi':
@@ -346,6 +365,7 @@ module.exports = msgHandler = async (benny, message) => {
             benny.reply(from, '1. #randomHentai\n2. #randomNsfwNeko', id)
             break
         case '#igstalk':
+		case '#stalkig':
 		if (!isRegistered) return benny.sendText(from, `Nomor kamu belum terdafar! \n\nSilahkan register dengan format:\n*#daftar* <nama | daerah>\n\nTanpa tanda <>`)
             if (args.length === 1)  return benny.reply(from, 'Kirim perintah *#igStalk @username*\nConntoh *#igStalk @duar_amjay*', id)
             const stalk = await get.get('https://api-zefian.glitch.me/api/stalk?username='+ args[1]).json()
@@ -442,6 +462,22 @@ module.exports = msgHandler = async (benny, message) => {
             } else {
                 benny.reply(from, 'Usage :\n#brainly [pertanyaan] [.jumlah]\n\nEx : \n#brainly NKRI .2', id)
             }
+            break
+		case '#nekopoi':
+             rugapoi.getLatest()
+            .then((result) => {
+                rugapoi.getVideo(result.link)
+                .then((res) => {
+                    let heheq = '\n'
+                    for (let i = 0; i < res.links.length; i++) {
+                        heheq += `${res.links[i]}\n`
+                    }
+                    aruga.reply(from, `Title: ${res.title}\n\nLink:\n${heheq}\nmasih tester bntr :v`)
+                })
+            })
+            .catch(() => {
+                aruga.reply(from, 'Ada yang Error!', id)
+            })
             break
         case '#wait':
 						    if (!isRegistered) return benny.sendText(from, `Nomor kamu belum terdafar! \n\nSilahkan register dengan format:\n*#daftar* <nama | daerah>\n\nTanpa tanda <>`)
@@ -572,7 +608,7 @@ module.exports = msgHandler = async (benny, message) => {
             if (!isGroupMsg) return benny.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             if (!isBotGroupAdmins) return benny.reply(from, 'Perintah ini hanya bisa di gunakan ketika bot menjadi admin', id)
             const allMemi = await benny.getGroupMembers(groupId)
-            for (let i = 1; i < allMemi.length; i++) {
+            for (let i = 0; i < allMemi.length; i++) {
                     await benny.demoteParticipant(groupId, allMemi[i].id)
             }
             benny.reply(from, 'Succes demote all member', id)
@@ -641,7 +677,6 @@ module.exports = msgHandler = async (benny, message) => {
         case '#promote':
 		if (!isRegistered) return benny.sendText(from, `Nomor kamu belum terdafar! \n\nSilahkan register dengan format:\n*#daftar* <nama | daerah>\n\nTanpa tanda <>`)
             if (!isGroupMsg) return benny.reply(from, 'Fitur ini hanya bisa di gunakan dalam group', id)
-            if (!isGroupAdmins) return benny.reply(from, 'Fitur ini hanya bisa di gunakan oleh admin group', id)
             if (!isBotGroupAdmins) return benny.reply(from, 'Fitur ini hanya bisa di gunakan ketika bot menjadi admin', id)
             if (mentionedJidList.length === 0) return benny.reply(from, 'Untuk menggunakan fitur ini, kirim perintah *#promote* @tagmember', id)
             if (mentionedJidList.length >= 2) return benny.reply(from, 'Maaf, perintah ini hanya dapat digunakan kepada 1 user.', id)
@@ -987,7 +1022,7 @@ if (!isRegistered) return benny.sendText(from, `Nomor kamu belum terdafar! \n\nS
 	  if (key !== 'javascript') return benny.reply(from, '*key* salah! silahkan chat owner bot unruk mendapatkan key yang valid', id)
 	   _premium.push(sender.id)
    fs.writeFileSync('./lib/premium.json', JSON.stringify(_premium))
-   return await benny.reply(from, 'Selamat nomor anda telah terdaftar sebagai premium user gunakan fitur premium dengan bijak. \n Terima Kasih', id)
+ await benny.reply(from, 'Selamat nomor anda telah terdaftar sebagai premium user gunakan fitur premium dengan bijak. \n Terima Kasih', id)
    break
    case '#info':
 		if (!isRegistered) return benny.sendText(from, `Nomor kamu belum terdafar! \n\nSilahkan register dengan format:\n*#daftar* <nama | daerah>\n\nTanpa tanda <>`)
