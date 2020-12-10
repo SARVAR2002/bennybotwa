@@ -17,7 +17,7 @@
 ## Clone this project
 
 ```bash
-> git clone https://github.com/bennyganteng/BennyBOT.git
+> git clone https://github.com/bennyganteng/bennybotwa.git
 ```
 
 ## Install the dependencies:
