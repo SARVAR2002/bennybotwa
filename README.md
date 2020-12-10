@@ -75,6 +75,8 @@ Before running this script, first edit [`THIS`](https://github.com/MhankBarBar/w
 |       ✅        |   Promote User                  |
 |       ✅        |   Demote User                   |
 |       ✅        |   Kick User                     |
+|       ✅        |   Demote All Participants       |
+|       ✅        |   Promote All Participants      |
 |       ✅        |   Add User                      |
 |       ✅        |   Mention All User              |
 |       ✅        |   Get link group                |
