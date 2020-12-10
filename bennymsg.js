@@ -63,7 +63,7 @@ module.exports = msgHandler = async (benny, message) => {
         const groupAdmins = isGroupMsg ? await benny.getGroupAdmins(groupId) : ''
         const isGroupAdmins = isGroupMsg ? groupAdmins.includes(sender.id) : false
         const isBotGroupAdmins = isGroupMsg ? groupAdmins.includes(botNumber + '@c.us') : false
-        const pilotNumber = '62822119995947@c.us'
+        const pilotNumber = '6289636006352@c.us'
         const isPilot = sender.id === pilotNumber
         const isBlocked = blockNumber.includes(sender.id)
 		const isRegistered = _registered.includes(sender.id)
@@ -537,7 +537,8 @@ module.exports = msgHandler = async (benny, message) => {
 		if (!isRegistered) return benny.sendText(from, `Nomor kamu belum terdafar! \n\nSilahkan register dengan format:\n*#daftar* <nama | daerah>\n\nTanpa tanda <>`)
             if (!isGroupMsg) return benny.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
             if (!isGroupAdmins) return benny.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
-            const groupMem = await benny.getGroupMembers(groupId)
+            if (!isBotGroupAdmins) return benny.reply(from, 'Perintaah ini hanya bisa digunakan ketika bot menjadi admin', id)
+		    const groupMem = await benny.getGroupMembers(groupId)
             let hehe = '╔══✪〘 Mention All 〙✪══\n'
             for (let i = 0; i < groupMem.length; i++) {
                 hehe += '╠➥'
@@ -565,6 +566,26 @@ module.exports = msgHandler = async (benny, message) => {
                     await benny.removeParticipant(groupId, allMem[i].id)
             }
             benny.reply(from, 'Succes kick all member', id)
+            break
+		case '#demoteall':
+		if (!isRegistered) return benny.sendText(from, `Nomor kamu belum terdafar! \n\nSilahkan register dengan format:\n*#daftar* <nama | daerah>\n\nTanpa tanda <>`)
+            if (!isGroupMsg) return benny.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
+            if (!isBotGroupAdmins) return benny.reply(from, 'Perintah ini hanya bisa di gunakan ketika bot menjadi admin', id)
+            const allMemi = await benny.getGroupMembers(groupId)
+            for (let i = 1; i < allMemi.length; i++) {
+                    await benny.demoteParticipant(groupId, allMemi[i].id)
+            }
+            benny.reply(from, 'Succes demote all member', id)
+            break
+		case '#promoteall':
+		if (!isRegistered) return benny.sendText(from, `Nomor kamu belum terdafar! \n\nSilahkan register dengan format:\n*#daftar* <nama | daerah>\n\nTanpa tanda <>`)
+            if (!isGroupMsg) return benny.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
+            if (!isBotGroupAdmins) return benny.reply(from, 'Perintah ini hanya bisa di gunakan ketika bot menjadi admin', id)
+            const allMemu = await benny.getGroupMembers(groupId)
+            for (let i = 1; i < allMemu.length; i++) {
+                    await benny.promoteParticipant(groupId, allMemu[i].id)
+            }
+            benny.reply(from, 'Succes promote all member', id)
             break
         case '#leaveall':
 		if (!isRegistered) return benny.sendText(from, `Nomor kamu belum terdafar! \n\nSilahkan register dengan format:\n*#daftar* <nama | daerah>\n\nTanpa tanda <>`)
