@@ -106,6 +106,28 @@ module.exports = msgHandler = async (benny, message) => {
                     benny.reply(from, mess.error.St, id)
             }
             break
+			case '#toimg':
+			if (!isRegistered) return benny.sendText(from, `Nomor kamu belum terdafar! \n\nSilahkan register dengan format:\n*#daftar* <nama | daerah>\n\nTanpa tanda <>`)
+            if (isMedia && types === 'sticker') {
+                const mediaDatas = await decryptMedia(message, uaOverride)
+                const imageBase64a = `data:${mimetype};base64,${mediaData.toString('base64')}`
+                await benny.sendImage(from, imageBase64a)
+            } else if (quotedMsg && quotedMsg.type == 'sticker') {
+                const mediaDatas = await decryptMedia(quotedMsg, uaOverride)
+                const imageBase64a = `data:${quotedMsg.mimetype};base64,${mediaDatas.toString('base64')}`
+                await benny.sendImage(from, imageBase64a)
+            } else if (args.length === 2) {
+                const urls = args[1]
+                if (urls.match(isUrl)) {
+                    await benny.sendImagefromUrl(from, urls, { method: 'get' })
+                        .catch(err => console.log('Caught exception: ', err))
+                } else {
+                    benny.reply(from, mess.error.Iv, id)
+                }
+            } else {
+                    benny.reply(from, mess.error.St, id)
+            }
+            break
         case '#stickergif':
 		case '#gifsticker':
 		if (!isPremium) return benny.sendText(from, `Nomor kamu belum terdaftar sebagai user premium. Hubungi owner untuk mendaftar!`)
@@ -575,12 +597,12 @@ module.exports = msgHandler = async (benny, message) => {
             if (!isGroupAdmins) return benny.reply(from, 'Perintah ini hanya bisa di gunakan oleh admin group', id)
             if (!isBotGroupAdmins) return benny.reply(from, 'Perintaah ini hanya bisa digunakan ketika bot menjadi admin', id)
 		    const groupMem = await benny.getGroupMembers(groupId)
-            let hehe = '╔══✪〘 Mention All 〙✪══\n'
+            let hehe = ''
             for (let i = 0; i < groupMem.length; i++) {
-                hehe += '╠➥'
+                hehe += ''
                 hehe += ` @${groupMem[i].id.replace(/@c.us/g, '')}\n`
             }
-            hehe += '╚═〘 BENNY BOT 〙'
+            hehe += ''
             await sleep(2000)
             await benny.sendTextWithMentions(from, hehe)
             break
@@ -679,7 +701,6 @@ module.exports = msgHandler = async (benny, message) => {
             if (!isGroupMsg) return benny.reply(from, 'Fitur ini hanya bisa di gunakan dalam group', id)
             if (!isBotGroupAdmins) return benny.reply(from, 'Fitur ini hanya bisa di gunakan ketika bot menjadi admin', id)
             if (mentionedJidList.length === 0) return benny.reply(from, 'Untuk menggunakan fitur ini, kirim perintah *#promote* @tagmember', id)
-            if (mentionedJidList.length >= 2) return benny.reply(from, 'Maaf, perintah ini hanya dapat digunakan kepada 1 user.', id)
             if (groupAdmins.includes(mentionedJidList[0])) return benny.reply(from, 'Maaf, user tersebut sudah menjadi admin.', id)
             await benny.promoteParticipant(groupId, mentionedJidList[0])
             await benny.sendTextWithMentions(from, `Perintah diterima, menambahkan @${mentionedJidList[0]} sebagai admin.`)
@@ -981,7 +1002,67 @@ if (!isRegistered) return benny.sendText(from, `Nomor kamu belum terdafar! \n\nS
 		case '#command':
 		case '#perintah':
 	    if (!isRegistered) return benny.sendText(from, `Nomor kamu belum terdafar! \n\nSilahkan register dengan format:\n*#daftar* <nama | daerah>\n\nTanpa tanda <>`)
-	    return await benny.reply(from, help, id)
+	    return await benny.reply(from, `Hi ${pushname}👋🏻 \n${time} \n\n\nIni ada beberapa fitur dari Benny semoga bermanfaat
+\n❣ *BENNY BOT* ❣
+
+   { Group Commands }
+   
+   1. *#add 62858xxxxx*
+   2. *#kick @tagmember*
+   3. *#promote @tagmember*
+   4. *#demote @tagadmin*
+   5. *#mentionAll*
+   6. *#adminList*
+   7. *#ownerGroup*
+   8. *#leave*
+   9. *#linkgrup*
+   10. *#delete [replyChatBot]*
+   11. *#kickAll*
+   12. *#demoteall*
+   13. *#promoteall*
+   
+   { Downloader Commands }
+
+1. *#ytmp3 [linkYt]*
+2. *#ytmp4 [linkYt]*
+3. *#ig [linkIg]*
+4. *#fb [linkFb]*
+
+   { Others Commands }
+   
+   1. *#sticker*
+   2. *#toimg [mengubah sticker menjadi image]*
+   2. *#neko*
+   3. *#pokemon*
+   4. *#inu*
+   5. *#jadwalShalat [daerah]*
+   6. *#jadwalTv [channel]*
+   7. *#cuaca [tempat]*
+   8. *#tts [kode bhs] [teks]*
+   9. *#igStalk [@username]*
+   10. *#wiki [query]*
+   11. *#waifu*
+   12. *#husbu*
+   13. *#randomNekoNime*
+   14. *#randomTraNnime*
+   15. *#randomAnime*
+   16. *#info*
+   17. *#infoGempa*
+   18. *#meme*
+   19. *#quotemaker [|teks|author|theme]*
+   20. *#join [linkGroup]*
+   21. *#quotes*
+   22. *#quotesnime*
+   23. *#wait*
+   24. *#nulis [teks]*
+   25. *#donasi*
+   26. *#lirik [optional]*
+   27. *#homebot [homebot benny]*
+   28. *#tutorial [tutorial pasang bot]*
+   29. *#antikasar [yang ngomong kasar harus kena denda bodo]*
+   
+   
+       Grup Bot Benny https://chat.whatsapp.com/DyLb768sfPDB2SHpxUuDDO.`, id)
             break
         case '#readme':
 		if (!isRegistered) return benny.sendText(from, `Nomor kamu belum terdafar! \n\nSilahkan register dengan format:\n*#daftar* <nama | daerah>\n\nTanpa tanda <>`)
