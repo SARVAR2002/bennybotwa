@@ -43,6 +43,7 @@ Before running this script, first edit [`THIS`](https://github.com/MhankBarBar/w
 |       ✅       | Reply A Photo                    |
 |       ✅       | Image Url                        |
 |       ✅       | Send Video or GIF with Caption   |
+|       ✅       | Send Sticker As Image            |
 
 
 | Downloader |                     Feature                |
@@ -114,6 +115,7 @@ Fix Stuck on linux, install google chrome stable:
 * [`open-wa/wa-automate-nodejs`](https://github.com/open-wa/wa-automate-nodejs)
 * [`YogaSakti/imageToSticker`](https://github.com/YogaSakti/imageToSticker)
 * [`SomnathDas/Whatsapp-Botto-Re`](https://github.com/SomnathDas/Whatsapp-Botto-Re)
+* [`MhankBarBar/whatsapp-bot`](https://github.com/MhankBarBar/whatsapp-bot)
 
 ### Donate
 * [`Saweria`](https://saweria.co/donate/mhankbarbar)
