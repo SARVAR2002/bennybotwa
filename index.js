@@ -14,7 +14,7 @@ const start = async (benny = new benny()) => {
         benny.onMessage((async (message) => {
             benny.getAmountOfLoadedMessages()
             .then((msg) => {
-                if (msg >= 500) {
+                if (msg >= 50) {
                     benny.cutMsgCache()
                 }
             })
@@ -31,7 +31,7 @@ const start = async (benny = new benny()) => {
             if (totalMem < 0) { 
             	benny.sendText(chat.id, `Cih member nya cuma ${totalMem}, Kalo mau invite bot, minimal jumlah mem ada 0`).then(() => benny.leaveGroup(chat.id)).then(() => benny.deleteChat(chat.id))
             } else {
-                benny.sendText(chat.groupMetadata.id, `Halo warga grup *${chat.contact.name}* terimakasih sudah menginvite bot ini, untuk melihat menu silahkan kirim *!help*`)
+                benny.sendText(chat.groupMetadata.id, `Halo warga grup *${chat.contact.name}* terimakasih sudah menginvite bot ini, untuk melihat menu silahkan kirim *#help*`)
             }
         }))
 
