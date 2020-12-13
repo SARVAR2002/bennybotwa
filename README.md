@@ -30,7 +30,7 @@ you've just cloned!!
 ```
 
 ### Usage
-Before running this script, first edit [`THIS`](https://github.com/bennyganteng/bennybotwa/blob/master/msgHndlr.js#L60) section with your WhatsApp number, remember your WhatsApp number!  Not a bot number, then
+Before running this script, first edit [`THIS`](https://github.com/bennyganteng/bennybotwa/blob/master/bennymsg.js#L69) section with your WhatsApp number, remember your WhatsApp number!  Not a bot number, then
 ```bash
 > npm start
 ```
