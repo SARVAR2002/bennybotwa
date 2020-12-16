@@ -1,14 +1,14 @@
 {
-  "name": "BennyBOT",
-  "version": "2.0.0",
-  "description": "Halo sesama pengguna, <b>BennyBOT</b> adalah skrip otomatisasi whatsapp atau lebih seperti bot yang merespons kata kunci tertentu dan beberapa fitur lain yang sedang kami kerjakan.",
+  "name": "bennybotwa",
+  "version": "3",
+  "description": "Halo sesama pengguna, <b>bennybotwa</b> adalah skrip otomatisasi whatsapp atau lebih seperti bot yang merespons kata kunci tertentu dan beberapa fitur lain yang sedang kami kerjakan.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Mhank BarBar",
-  "license": "Apache-2.0",
+  "author": "Benny Hidayat",
+  "license": "MIT",
   "dependencies": {
     "@open-wa/wa-automate": "^2.1.6",
     "@open-wa/wa-decrypt": "^2.0.1",
@@ -35,13 +35,13 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bennyganteng/BennyBOT.git"
+    "url": "git+https://github.com/bennyganteng/bennybotwa.git"
   },
   "keywords": [
-    "Whatsapp-Bot"
+    "bennybotwa"
   ],
   "bugs": {
-    "url": "https://github.com/bennyganteng/BennyBOT/issues"
+    "url": "https://github.com/bennyganteng/bennybotwa/issues"
   },
-  "homepage": "https://github.com/bennyganteng/BennyBOT#readme"
+  "homepage": "https://github.com/bennyganteng/bennybotwa#readme"
 }
