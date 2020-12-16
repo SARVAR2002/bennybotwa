@@ -1,52 +1,52 @@
-const { create, benny } = require('@open-wa/wa-automate')
+const { create, Client } = require('@open-wa/wa-automate')
 const welcome = require('./lib/welcome')
 const bennymsg = require('./bennymsg')
 const options = require('./options')
 
-const start = async (benny = new benny()) => {
+const start = async (client = new Client()) => {
         console.log('[SERVER] Server Started!')
         // Force it to keep the current session
-        benny.onStateChanged((state) => {
+        client.onStateChanged((state) => {
             console.log('[Benny State]', state)
-            if (state === 'CONFLICT' || state === 'UNLAUNCHED') benny.forceRefocus()
+            if (state === 'CONFLICT' || state === 'UNLAUNCHED') client.forceRefocus()
         })
         // listening on message
-        benny.onMessage((async (message) => {
-            benny.getAmountOfLoadedMessages()
+        client.onMessage((async (message) => {
+            client.getAmountOfLoadedMessages()
             .then((msg) => {
-                if (msg >= 50) {
-                    benny.cutMsgCache()
+                if (msg >= 3000) {
+                    client.cutMsgCache()
                 }
             })
-            bennymsg(benny, message)
+            bennymsg(client, message)
         }))
 
-        benny.onGlobalParicipantsChanged((async (heuh) => {
-            await welcome(benny, heuh)
-            //left(benny, heuh)
+        client.onGlobalParicipantsChanged((async (heuh) => {
+            await welcome(client, heuh)
+            //left(client, heuh)
             }))
         
-        benny.onAddedToGroup(((chat) => {
+        client.onAddedToGroup(((chat) => {
             let totalMem = chat.groupMetadata.participants.length
-            if (totalMem < 0) { 
-            	benny.sendText(chat.id, `Cih member nya cuma ${totalMem}, Kalo mau invite bot, minimal jumlah mem ada 0`).then(() => benny.leaveGroup(chat.id)).then(() => benny.deleteChat(chat.id))
+            if (totalMem < 30) { 
+            	client.sendText(chat.id, `Cih member nya cuma ${totalMem}, Kalo mau invite bot, minimal jumlah mem ada 30`).then(() => client.leaveGroup(chat.id)).then(() => client.deleteChat(chat.id))
             } else {
-                benny.sendText(chat.groupMetadata.id, `Halo warga grup *${chat.contact.name}* terimakasih sudah menginvite bot ini, untuk melihat menu silahkan kirim *#help*`)
+                client.sendText(chat.groupMetadata.id, `Halo warga grup *${chat.contact.name}* terimakasih sudah menginvite bot ini, untuk melihat menu silahkan kirim *!help*`)
             }
         }))
 
-        /*benny.onAck((x => {
+        /*client.onAck((x => {
             const { from, to, ack } = x
-            if (x !== 3) benny.sendSeen(to)
+            if (x !== 3) client.sendSeen(to)
         }))*/
 
         // listening on Incoming Call
-        benny.onIncomingCall(( async (call) => {
-            await benny.sendText(call.peerJid, 'Maaf, saya tidak bisa menerima panggilan. nelfon = block!')
-            .then(() => benny.contactBlock(call.peerJid))
+        client.onIncomingCall(( async (call) => {
+            await client.sendText(call.peerJid, 'Maaf, saya tidak bisa menerima panggilan. nelfon = block!')
+            .then(() => client.contactBlock(call.peerJid))
         }))
     }
 
-create('Benny', options(true, start))
-    .then(benny => start(benny))
+create(options(true, start))
+    .then(client => start(client))
     .catch((error) => console.log(error))
