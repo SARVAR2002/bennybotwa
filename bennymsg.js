@@ -98,14 +98,11 @@ module.exports = bennymsg = async (benny, message) => {
 		const isBanned = ban.includes(sender.id)
         const uaOverride = 'WhatsApp/2.2029.4 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36'
         const isUrl = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/gi)
-        //if (command.startsWith('#') && isBanned && !isGroupMsg) { return console.log(color('[BAN]', 'red'), color(moment(t * 1000).format('DD/MM/YY HH:mm:ss'), 'yellow'), color(`${command} [${args.length}]`), 'from', color(pushname)) }
-        //if (command.startsWith('#') && isBanned && isGroupMsg) { return console.log(color('[BAN]', 'red'), color(moment(t * 1000).format('DD/MM/YY HH:mm:ss'), 'yellow'), color(`${command} [${args.length}]`), 'from', color(pushname), 'in', color(name || formattedTitle)) }
+        if (!isGroupMsg && isBanned && command.startsWith('#')) { return console.log(color('[BAN]', 'red'), color(moment(t * 1000).format('DD/MM/YY HH:mm:ss'), 'yellow'), color(`${command} [${args.length}]`), 'from', color(pushname)) }
+        if (isGroupMsg && isBanned && command.startsWith('#')) { return console.log(color('[BAN]', 'red'), color(moment(t * 1000).format('DD/MM/YY HH:mm:ss'), 'yellow'), color(`${command} [${args.length}]`), 'from', color(pushname), 'in', color(name || formattedTitle)) }
 		if (!isGroupMsg && command.startsWith('#')) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(msgs(command)), 'from', color(pushname))
         if (isGroupMsg && command.startsWith('#')) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(msgs(command)), 'from', color(pushname), 'in', color(formattedTitle))
-		if (!isGroupMsg && isBanned && command.startsWith('#')) console.log(color('\x1b[1;31m~\x1b[1;37m>', 'BAN', 'red'), time, color(body), 'from', color(pushname))
-        if (isGroupMsg && isBanned && command.startsWith('#')) console.log(color('\x1b[1;31m~\x1b[1;37m>', 'BAN', 'red'), time, color(body), 'from', color(pushname), 'in', color(formattedTitle))	
-  //if (isBlocked) return
-        msgFilter.addFilter(from)
+		msgFilter.addFilter(from)
 		
 		benny.sendSeen(chatId)
 	
