@@ -353,10 +353,10 @@ module.exports = bennymsg = async (benny, message) => {
 			if (!isGroupMsg) return benny.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup!', id)
             if (!isGroupAdmins) return benny.reply(from, 'Gagal, perintah ini hanya dapat digunakan oleh admin grup!', id)
             if (!isBotGroupAdmins) return benny.reply(from, 'Gagal, silahkan tambahkan bot sebagai admin grup!', id)
-			if (args.length !== 1) return benny.reply(from, `Untuk mengubah settingan group chat agar hanya admin saja yang bisa chat\n\nPenggunaan:\n${prefix}mutegrup on --aktifkan\n${prefix}mutegrup off --nonaktifkan`, id)
-            if (args[0] == 'on') {
+			if (args.length === 1) return benny.reply(from, 'Pilih on atau off!', id)
+			if (args[1].toLowerCase() === 'on') {
 				benny.setGroupToAdminsOnly(groupId, true).then(() => benny.sendText(from, 'Berhasil mengubah agar hanya admin yang dapat chat!'))
-			} else if (args[0] == 'off') {
+		    } else if (args[1].toLowerCase() === 'off') {
 				benny.setGroupToAdminsOnly(groupId, false).then(() => benny.sendText(from, 'Berhasil mengubah agar semua anggota dapat chat!'))
 			} else {
 				benny.reply(from, `Untuk mengubah settingan group chat agar hanya admin saja yang bisa chat\n\nPenggunaan:\n${prefix}mutegrup on --aktifkan\n${prefix}mutegrup off --nonaktifkan`, id)
@@ -1407,7 +1407,7 @@ module.exports = bennymsg = async (benny, message) => {
 		case '#perintah':
 		if (isBanned) return await benny.reply(from, `Maaf ${pushname} nomor kamu telah dibanned!`, id)
 	    if (!isRegistered) return benny.sendText(from, `Nomor kamu belum terdafar! \n\nSilahkan register dengan format:\n#daftar`)
-	     await benny.sendLinkWithAutoPreview(from, `https://chat.whatsapp.com/KJzlzOzZEQv5pcGsITuIaG`)
+	      benny.sendLinkWithAutoPreview(from, `https://chat.whatsapp.com/KJzlzOzZEQv5pcGsITuIaG`)
 		return await benny.reply(from, `Hi ${pushname}👋🏻 \nTanggal dan Waktu \n${time} \n\nNomor owner: ${pilotNumber}\n\n\nIni ada beberapa fitur dari Benny semoga bermanfaat \n${help}`, id)
             break
         case '#readme':
