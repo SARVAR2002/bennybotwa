@@ -125,4 +125,4 @@ Fix Stuck on linux, install google chrome stable:
 * [`MhankBarBar/whatsapp-bot`](https://github.com/MhankBarBar/whatsapp-bot)
 
 ### Donate
-* [`Saweria`](https://saweria.co/donate/mhankbarbar)
+* [`Ssubscribe`](https://youtube.com/c/bennyhidayat)
