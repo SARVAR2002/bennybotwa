@@ -95,6 +95,13 @@ Before running this script, first edit [`THIS`](https://github.com/bennyganteng/
 | :------------: | :---------------------------------------------: |
 |       ✅        |   Join Group                    |
 
+| Super Owner Bot Only  |              Feature                |
+| :------------: | :---------------------------------------------: |
+|       ✅        |   tambah owner                   |
+|       ✅        |   hapusowner                     |
+|       ✅        |   shutdown bot                   |
+|       ✅        |   tambah premium user            |
+
 | Owner Bot Only  |              Feature                |
 | :------------: | :---------------------------------------------: |
 |       ✅        |   leave all group                   |
