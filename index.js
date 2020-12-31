@@ -1,20 +1,21 @@
 const { create, Client } = require('@open-wa/wa-automate')
 const welcome = require('./lib/welcome')
 const bennymsg = require('./bennymsg')
+const color = require('./lib/color')
 const options = require('./options')
 
 const start = async (client = new Client()) => {
-        console.log('[SERVER] Server Started!')
+        console.log(color('[SERVER] Server Online!', 'yellow'))
         // Force it to keep the current session
         client.onStateChanged((state) => {
-            console.log('[Benny State]', state)
+            console.log(color('[bennybotwa]', 'blue'), state)
             if (state === 'CONFLICT' || state === 'UNLAUNCHED') client.forceRefocus()
         })
         // listening on message
         client.onMessage((async (message) => {
             client.getAmountOfLoadedMessages()
             .then((msg) => {
-                if (msg >= 3000) {
+                if (msg >= 500) {
                     client.cutMsgCache()
                 }
             })
@@ -25,11 +26,11 @@ const start = async (client = new Client()) => {
             await welcome(client, heuh)
             //left(client, heuh)
             }))
-        
+		
         client.onAddedToGroup(((chat) => {
             let totalMem = chat.groupMetadata.participants.length
-            if (totalMem < 30) { 
-            	client.sendText(chat.id, `Cih member nya cuma ${totalMem}, Kalo mau invite bot, minimal jumlah mem ada 30`).then(() => client.leaveGroup(chat.id)).then(() => client.deleteChat(chat.id))
+            if (totalMem < 100) { 
+            	client.sendText(chat.id, `Cih member nya cuma ${totalMem}, Kalo mau invite bot, minimal jumlah mem ada 100`).then(() => client.leaveGroup(chat.id)).then(() => client.deleteChat(chat.id))
             } else {
                 client.sendText(chat.groupMetadata.id, `Halo warga grup *${chat.contact.name}* terimakasih sudah menginvite bot ini, untuk melihat menu silahkan kirim *!help*`)
             }
