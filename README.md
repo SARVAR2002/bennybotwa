@@ -44,14 +44,18 @@ Before running this script, first edit [`THIS`](https://github.com/bennyganteng/
 |       ✅       | Image Url                        |
 |       ✅       | Send Video or GIF with Caption   |
 |       ✅       | Send Sticker As Image            |
+|       ✅       | Text To Sticker                  |
+|       ✅       | Text Glitch To Sticker           |
+|       ✅       | Text Tunder To Sticker           |
+
 
 
 | Downloader |                     Feature                |
 | :------------: | :---------------------------------------------: |
-|       ✅        |   YouTube mp3 Downloader                    |
+|       ❌        |   YouTube mp3 Downloader                    |
 |       ❌        |   Doujin Downloader         |
-|       ✅        |   Instagram Video/Image Downloader                  |
-|       ✅        |   Facebook Video Downloader                  |
+|       ❌        |   Instagram Video/Image Downloader                  |
+|       ❌        |   Facebook Video Downloader                  |
 
 
 | Other  |                     Feature                     |
@@ -67,7 +71,11 @@ Before running this script, first edit [`THIS`](https://github.com/bennyganteng/
 |       ✅        |   Wikipedia                     |
 |       ✅        |   Anime searcher                |
 |       ✅        |   Get a random cat images       |
-|       ✅        |   Get a random dog images       |
+|       ✅        |   Text Glitch       |
+|       ✅        |   PornHub Logo Maker       |
+|       ✅        |   BlackPink Logo Maker       |
+|       ✅        |   Text3D Logo Maker       |
+|       ✅        |   Thunder Text Logo Maker       |
 |      And        |   Others...                     |
 
 
@@ -85,6 +93,7 @@ Before running this script, first edit [`THIS`](https://github.com/bennyganteng/
 |       ✅        |   Get owner group               |
 |       ✅        |   enable or disable nsfw command|
 |       ✅        |   enable or disable welcome feature|
+|       ✅        |   Text To Picture               |
 
 
 | Owner Group Only  |              Feature                |
